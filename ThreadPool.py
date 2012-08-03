@@ -1,6 +1,7 @@
 import threading
 import Queue
 import time
+import sys
 
 class ThreadPoolTask(threading.Thread):
 
@@ -21,8 +22,7 @@ class ThreadPoolTask(threading.Thread):
                 try:
                     callback(*args)
                 except Exception, e:
-                    print "Error callback:"
-                    print e
+                    print >> sys.stderr,"ThreadPoolTask [%s] :" % self.name, e
             except:
                 pass
             if self._waitToKill and not self.isRunning:
